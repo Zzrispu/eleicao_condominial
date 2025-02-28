@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    font-family: "Roboto", serif;
+    --azul_1: #001219;
+    --azul_2: #005F73;
+    --azul_3: #0A9396;
+    --azul_4: #94D2BD;
+    --bege: #E9D8A6;
+    --amarelo: #EE9B00;
+    --laranja_1: #CA6702;
+    --laranja_2: #BB3E03;
+    --veremlho_1: #AE2012;
+    --veremlho_2: #9B2226;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background-color: var(--azul_1);
+}
+
+.content-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 300px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--azul_2);
+    color: var(--azul_4);
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+
+.content-box:hover {
+    transform: scale(1.10);
+}
+
+.content-box i {
+    font-size: 4rem;
+    height: fit-content;
+    aspect-ratio: 1/1;
+}
+
+.columns {
+    display: flex;
+    column-gap: 2rem;
+}
+
+@media screen and (max-width: 800px) {
+    .columns {
+        flex-wrap: wrap;
+        row-gap: 2rem;
+    }
+    
+}

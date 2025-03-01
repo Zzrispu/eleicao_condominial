@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moradores</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/moradores.js') }}"></script>
+</head>
+
+<body>
+    <section class="conteiner">
+        <h2>Moradores</h2>
+        <div class="ul-btn" id="add-auto">Carregar do DataFrame</div>
+        <div class="ul-btn">
+            <span id="add-morador">+ Morador</span>
+            <form id="add-morador-form">
+                <div class="input-box">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome">
+                </div>
+                <div class="input-box">
+                    <label for="apartamento">Apartamento</label>
+                    <input type="number" name="apartamento" id="apartamento">
+                </div>
+                <input type="checkbox" name="candidato" id="candidato">
+                <label for="candidato">Candidato</label>
+                <button>+</button>
+            </form>
+        </div>
+        <ul id="moradores-list">
+            <li>Fulano de Tal</li>
+            <li>Fulano de Tal</li>
+            <li>Fulano de Tal</li>
+        </ul>
+    </section>
+</body>
+
+</html>

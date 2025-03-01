@@ -27,8 +27,6 @@ class Morador():
                 apartamento = input(f"Digite um número de apartamento para criá-lo ou alocá-lo: ")
                 continue
 
-        self.apartamento.add_morador(self)
-
     def __str__(self):
         return f"{self.nome} mora no apartamento {self.apartamento.numero}"
 
@@ -65,6 +63,20 @@ class Apartamento():
 
     def add_morador(self, morador: Morador):
         self.moradores.append(morador)
+
+    def remove_morador(self, nome: str):
+        for morador in self.moradores:
+            if morador.nome == nome:
+                self.moradores.remove(morador)
+                return f"{morador.nome} do apartamento {morador.apartamento} foi removido"
+        return f"Morador {nome} não foi encontrado"
+
+    def remove_apartamento(self, apartamento: int):
+        for ap in self.apartamentos:
+            if ap.numero == apartamento:
+                self.apartamentos.remove(ap)
+                return f"O apartamento nº{ap.numero} foi removido"
+        return f"Apartamento {apartamento} não foi encontrado"
 
     def reset_voto(self):
         self.votou = False

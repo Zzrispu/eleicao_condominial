@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna - Registrar</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=swap_horiz" />
+
+    <script src="{{ url_for('static', filename='js/urna/registrar.js') }}"></script>
+</head>
+
+<body style="flex-direction: column; row-gap: 1rem;">
+    <secion class="conteiner">
+        <h1>Candidatos</h1>
+        <div class="columns" style="align-items: center;">
+            <div class="select-box">
+                <label for="c-unregistered">Não Registrado</label>
+                <select id="c-unregistered" multiple size="10">
+                </select>
+            </div>
+            <button class="material-symbols-rounded" id="c-swap-btn">swap_horiz</button>
+            <div class="select-box">
+                <label for="c-registered">Registrado</label>
+                <select id="c-registered" multiple size="10">
+                </select>
+            </div>
+        </div>
+        <!-- <button id="c-save-btn">Salvar</button> -->
+    </secion>
+    <secion class="conteiner">
+        <h1>Apartamentos</h1>
+        <div class="columns" style="align-items: center;">
+            <div class="select-box">
+                <label for="a-unregistered">Não Registrado</label>
+                <select id="a-unregistered" multiple size="10">
+                </select>
+            </div>
+            <button class="material-symbols-rounded" id="a-swap-btn">swap_horiz</button>
+            <div class="select-box">
+                <label for="a-registered">Registrado</label>
+                <select id="a-registered" multiple size="10">
+                </select>
+            </div>
+        </div>
+        <!-- <button id="a-save-btn">Salvar</button> -->
+    </secion>
+    <a href="/">Home</a>
+</body>
+
+</html>

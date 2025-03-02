@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
     };
 
+    updateMoradores();
+
     addAutoBtn.addEventListener('click', async () => {
         await fetch('/api/add_auto_morador')
             .then(response => response.json())

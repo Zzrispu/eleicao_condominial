@@ -34,6 +34,7 @@ class Morador():
         urna.votar(numero=candidato, apartamento=self.apartamento)
         return f"{self.nome} votou no candidato de número {candidato}"
 
+
 class Candidato(Morador):
     candidatos = []
 
@@ -52,6 +53,7 @@ class Candidato(Morador):
     def set_votos(self, votos):
         self.votos = votos
 
+
 class Apartamento():
     apartamentos = []
 
@@ -62,13 +64,14 @@ class Apartamento():
         self.apartamentos.append(self)
 
     def add_morador(self, morador: Morador):
-        self.moradores.append(morador)
+        morador.apartamento.moradores.append(morador)
 
     def remove_morador(self, nome: str):
-        for morador in self.moradores:
-            if morador.nome == nome:
-                self.moradores.remove(morador)
-                return f"{morador.nome} do apartamento {morador.apartamento} foi removido"
+        for ap in self.apartamentos:
+            for morador in ap.moradores:
+                if morador.nome == nome:
+                    ap.moradores.remove(morador)
+                    return f"{morador.nome} do apartamento {morador.apartamento} foi removido"
         return f"Morador {nome} não foi encontrado"
 
     def remove_apartamento(self, apartamento: int):
@@ -89,15 +92,24 @@ class Urna():
         self.apartamentos = []
         self.candidatos = []
 
-    def add_apartamento(self, apartamento: Apartamento):
-        if apartamento in self.apartamentos:
-            return "Apartamento já cadastrado"
+    def add_apartamento(self, apartamento: int):
+        for ap in Apartamento.apartamentos:
+            if ap.numero == apartamento:
+                apartamento = ap
+                break
+        if not isinstance(apartamento, Apartamento): return "Apartamento Inexistente"
+        if apartamento in self.apartamentos: return "Apartamento já cadastrado"
 
         self.apartamentos.append(apartamento)
+        return f"Apartamento nº {apartamento.numero} foi cadastrado com sucesso"
 
-    def add_candidato(self, candidato: Candidato):
-        if candidato in self.candidatos:
-            return "Candidato já cadastrado"
+    def add_candidato(self, candidato: str):
+        for c in Candidato.candidatos:
+            if c.nome == candidato:
+                candidato = c
+                break
+        if not isinstance(candidato, Candidato): return "Candidato Inexistente"
+        if candidato in self.candidatos: return "Candidato já cadastrado"
 
         setted = False
 
@@ -108,10 +120,31 @@ class Urna():
                 candidato.set_numero(rn)
                 setted = True
                 break
-        if not setted:
-            return "Não foi possível gerar um número para o candidato"
+        if not setted: return "Não foi possível gerar um número para o candidato"
 
         self.candidatos.append(candidato)
+        return f"Candidato {candidato.nome} foi registrado com o número {candidato.numero}"
+
+    def remove_candidato(self, candidato: str):
+        for c in self.candidatos:
+            if c.nome == candidato:
+                candidato = c
+                break
+        if not isinstance(candidato, Candidato): return "Candidato não está cadastrado"
+
+        candidato.numero = 0
+        self.candidatos.remove(candidato)
+        return f"Candidato {candidato.nome} número {candidato.numero} foi removido com sucesso"
+    
+    def remove_apartamento(self, apartamento: int):
+        for ap in self.apartamentos:
+            if ap.numero == apartamento:
+                apartamento = ap
+                break
+        if not isinstance(apartamento, Apartamento): return "Apartamento não está cadastrado"
+
+        self.apartamentos.remove(apartamento)
+        return f"Apartamento nº {apartamento.numero} foi removido com sucesso"
 
     def votar(self, numero: int, apartamento: Apartamento):
         candidato = None

@@ -1,4 +1,5 @@
-from flask import render_template, request, redirect, jsonify
+from flask import render_template, request, jsonify
+from flask_socketio import SocketIO, emit
 from app import app
 from agentes import Morador, Candidato, Apartamento, Urna
 import pandas as pd
@@ -6,6 +7,9 @@ import pandas as pd
 loaded_auto = False
 condominio = Apartamento(numero=101)
 urna = Urna()
+
+socketio = SocketIO(app, cors_allowed_origins="*")
+u_pendentes = {}
 
 # Rotas para Views #
 @app.get('/')
@@ -31,6 +35,18 @@ def viewUrna():
 @app.get('/urna/registrar')
 def urna_registrar():
     return render_template('urna/registrar.html')
+
+@app.get('/urna/votar')
+def viewUrna_votar():
+    return render_template('urna/votar.html')
+
+@app.get('/urna/controle')
+def urna_controle():
+    return render_template('urna/controle.html')
+
+@app.get('/resultados')
+def resultados():
+    return render_template('urna/resultados.html', resultados=urna.resultado())
 
 # Rotas API #
 @app.get('/api/add_auto_morador')
@@ -107,12 +123,12 @@ def remove_morador():
 # Rotas API Urna #
 @app.get('/api/urna/get_candidatos')
 def urna_get_candidatos():
-    candidatos = [candidato.nome for candidato in urna.candidatos]
+    candidatos = [{"nome": candidato.nome, "numero": candidato.numero, "votos": candidato.votos} for candidato in urna.candidatos]
     return candidatos
 
 @app.get('/api/urna/get_apartamentos')
 def urna_get_apartamentos():
-    apartamentos = [ap.numero for ap in urna.apartamentos]
+    apartamentos = [{"numero": ap.numero, "moradores": [morador.nome for morador in ap.moradores], "votou": ap.votou} for ap in urna.apartamentos]
     return apartamentos
 
 @app.post('/api/urna/add_candidato')
@@ -142,3 +158,33 @@ def urna_remove_apartamento():
 
     msg = urna.remove_apartamento(int(data.get('numero')))
     return jsonify({"msg": msg})
+
+@app.post('/api/urna/votar')
+def urna_votar():
+    data = request.get_json()
+
+    msg = urna.votar(int(data.get('numero')), int(data.get('apartamento')))
+    return jsonify({"msg": msg})
+
+# WebSocket #
+@socketio.on("solicitar_liberacao")
+def solicitar_liberacao(data):
+    user_id = data["user_id"]
+    u_pendentes[user_id] = request.sid
+
+    emit("solicitacao_recebida", {"user_id": user_id}, broadcast=True)
+
+@socketio.on('responder_solicitacao')
+def responder_solicitacao(data):
+    user_id = data["user_id"]
+    liberado = data["liberado"]
+
+    if user_id in u_pendentes:
+        user_socket = u_pendentes.pop(user_id)
+        emit("resposta_solicitacao", {"liberado": liberado}, room=user_socket)
+
+@app.post('/liberar_voto')
+def liberar_voto():
+    chave = request.json.get('chave')
+    socketio.emit('voto_liberado', {'chave': chave})
+    return {"msg": "voto liberado"}

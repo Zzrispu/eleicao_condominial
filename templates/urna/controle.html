@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna - Controle</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/urna/controle.js') }}"></script>
+</head>
+
+<body>
+    <section class="conteiner">
+        <h1>Solicitações de Acesso à Urna</h1>
+        <ul id="requests-box"></ul>
+        <button id="auto-votar-btn">Auto-votar</button>
+        <a href="/">Home</a>
+    </section>
+</body>
+
+</html>

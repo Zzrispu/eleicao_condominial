@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=apartment,emoji_people,fact_check,how_to_vote,location_away,settings_account_box" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=apartment,bar_chart,emoji_people,fact_check,how_to_vote,location_away,settings_account_box" />
 </head>
 
 <body>
@@ -32,8 +32,9 @@
             </a>
             <div class="options-box">
                 <a href="/urna/registrar"><i class="material-symbols-rounded">fact_check</i>Cadastrar</a>
-                <a><i class="material-symbols-rounded">how_to_vote</i>Votar</a>
-                <a><i class="material-symbols-rounded">settings_account_box</i>Controle</a>
+                <a href="/urna/votar"><i class="material-symbols-rounded">how_to_vote</i>Votar</a>
+                <a href="/resultados"><i class="material-symbols-rounded">bar_chart</i>Resultados</a>
+                <a href="/urna/controle"><i class="material-symbols-rounded">settings_account_box</i>Controle</a>
             </div>
         </div>
     </section>

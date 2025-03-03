@@ -1,21 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
-    async function updateCandidatos() {
-        const candidatosList = document.getElementById('candidatos-list');
-        const list = []
+document.addEventListener('DOMContentLoaded', async () => {
+    const candidatosList = document.getElementById('candidatos-list');
 
-        await fetch('/api/get_candidatos')
-            .then(response => response.json())
-            .then((data) => {
-                data.forEach(candidato => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `${candidato.nome} | nº ${candidato.numero} | Votos: ${candidato.votos}`;
-
-                    list.push(li);
-                })
-            }).catch(error => console.error(error));
-        
-        candidatosList.replaceChildren(...list);
-    };
-
-    updateCandidatos();
+    await fetch('/api/urna/get_candidatos')
+    .then(response => response.json())
+    .then(data => {
+        if (data.length < 1) {
+            candidatosList.innerHTML += `Não há candidados cadastrados`
+        } else {
+            data.forEach(candidato => {
+                const option = document.createElement('option');
+                option.innerHTML = `${candidato.nome} nº ${candidato.numero}`;
+                candidatosList.appendChild(option);
+            });
+        };
+    });
 });

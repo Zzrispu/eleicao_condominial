@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.forEach(apartamento => {
                     const li = document.createElement('li');
                     li.innerHTML = `Apartamento nº ${apartamento.numero}`;
-                    if (data.votou) {
+                    if (apartamento.votou) {
                         li.innerHTML += ` | ✅ Votou`;
                     } else {
                         li.innerHTML += ` | ❌ Votou`;

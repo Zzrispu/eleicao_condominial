@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna - Votar</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/urna/votar.js') }}"></script>
+</head>
+
+<body>
+    <section class="conteiner" id="section-conteiner">
+        <h1>Votar</h1>
+        <label for="morador-slc" class="pre-liberation">Selecione um morador para votar como:</label>
+        <select id="morador-slc" class="pre-liberation"></select>
+        <button id="selecionar-btn" class="pre-liberation">Selecionar</button>
+    </section>
+    <a href="/">Home</a>
+</body>
+
+</html>

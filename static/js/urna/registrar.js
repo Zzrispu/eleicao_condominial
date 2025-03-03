@@ -38,26 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
         await fetch('/api/urna/get_apartamentos')
             .then(response => response.json())
             .then((data) => {
-                data.forEach(numero => {
-                    const option = document.createElement('option');
-                    option.innerHTML = `Apartamento nº ${numero}`;
-
-                    rList.push(option);
+                data.forEach(apartamento => {
+                    rList.push(apartamento.numero);
                 });
             }).catch(error => console.error(error));
         await fetch('/api/get_apartamentos')
             .then(response => response.json())
             .then((data) => {
                 data.forEach(apartamento => {
-                    const option = document.createElement('option');
-                    option.innerHTML = `Apartamento nº ${apartamento.numero}`;
-
-                    if (!rList.includes(option)) unrList.push(option);
+                    if (!rList.includes(apartamento.numero)) unrList.push(apartamento.numero);
                 });
             }).catch(error => console.error(error));
         
-        aUnregistered.replaceChildren(...unrList);
-        aRegistered.replaceChildren(...rList);
+        aUnregistered.replaceChildren(...unrList.map(numero => {            
+            const option = document.createElement('option');
+            option.innerHTML = `Apartamento nº ${numero}`;
+            return option;
+        }));
+        aRegistered.replaceChildren(...rList.map(numero => {            
+            const option = document.createElement('option');
+            option.innerHTML = `Apartamento nº ${numero}`;
+            return option;
+        }));
     };
 
     cSwapBtn.addEventListener('click', () => {

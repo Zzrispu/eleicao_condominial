@@ -146,7 +146,7 @@ class Urna():
         self.apartamentos.remove(apartamento)
         return f"Apartamento nº {apartamento.numero} foi removido com sucesso"
 
-    def votar(self, numero: int, apartamento: Apartamento):
+    def votar(self, numero: int, apartamento: int):
         candidato = None
 
         for c in self.candidatos:
@@ -154,10 +154,13 @@ class Urna():
                 candidato = c
                 break
         if candidato is None:
-            return "Candidato não cadastrado"
+            return "Não há um cadidato com esse número"
 
-        if apartamento not in self.apartamentos:
-            return "Apartamento não cadastrado"
+        for ap in self.apartamentos:
+            if ap.numero == apartamento:
+                apartamento = ap
+                break
+        if not isinstance(apartamento, Apartamento): return "Apartamento não está cadastrado"
 
         if apartamento.votou:
             return "Apartamento já votou"
@@ -165,15 +168,9 @@ class Urna():
         candidato.set_votos(candidato.votos + 1)
         apartamento.votou = True
 
-        print(f"Voto computado para o candidato {candidato.numero}")
-
-        if all([ap.votou for ap in self.apartamentos]):
-            self.resultado()
+        return f"Voto computado para o candidato {candidato.numero}"
 
     def resultado(self):
-        ganhador = None
-        for c in self.candidatos:
-            if c.votos > (ganhador.votos if ganhador else 0):
-                ganhador = c
-            print(f"{c.nome} ({c.numero}): {c.votos} votos")
-        print(f"Ganhador: {ganhador.nome} ({ganhador.numero}): {ganhador.votos} votos")
+        if not all([ap.votou for ap in self.apartamentos]) or len(self.apartamentos) < 1: return "Ainda falta todos os Apartamentos votarem"
+        resultados = [{"candidato": f"{c.nome} nº {c.numero}", "votos": c.votos} for c in self.candidatos]
+        return resultados
